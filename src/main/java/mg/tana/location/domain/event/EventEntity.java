@@ -1,53 +1,26 @@
 package mg.tana.location.domain.event;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import java.util.UUID;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "event_store")
-public class EventEntity {
+public class EventEntity extends PanacheEntity {
 
-    @Id
-    @Column(name = "id", nullable = false, updatable = false)
-    private UUID id;
-
-    @Column(name = "aggregate_id", nullable = false)
-    private UUID aggregateId;
-
-    @Column(name = "event_type", nullable = false)
     private String eventType;
-
-    @Column(name = "payload", nullable = false, columnDefinition = "NVARCHAR(MAX)")
+    private Long aggregateId;
+    @Lob
     private String payload;
 
     public EventEntity() {
     }
 
-    public EventEntity(UUID id, UUID aggregateId, String eventType, String payload) {
-        this.id = id;
-        this.aggregateId = aggregateId;
-        this.eventType = eventType;
-        this.payload = payload;
-    }
-
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public UUID getAggregateId() {
-        return aggregateId;
-    }
-
-    public void setAggregateId(UUID aggregateId) {
-        this.aggregateId = aggregateId;
     }
 
     public String getEventType() {
@@ -56,6 +29,14 @@ public class EventEntity {
 
     public void setEventType(String eventType) {
         this.eventType = eventType;
+    }
+
+    public Long getAggregateId() {
+        return aggregateId;
+    }
+
+    public void setAggregateId(Long aggregateId) {
+        this.aggregateId = aggregateId;
     }
 
     public String getPayload() {

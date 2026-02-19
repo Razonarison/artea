@@ -1,7 +1,8 @@
 package mg.tana.location.application.service;
 
-import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import mg.tana.location.application.command.AssignContratToUserCommand;
 import mg.tana.location.application.command.CreateContratCommand;
 import mg.tana.location.application.command.CreateProduitCommand;
@@ -10,15 +11,33 @@ import mg.tana.location.application.port.in.ContratManagementUseCase;
 import mg.tana.location.application.port.in.EventQueryUseCase;
 import mg.tana.location.application.port.in.ProduitManagementUseCase;
 import mg.tana.location.application.port.in.UserManagementUseCase;
+import mg.tana.location.application.port.out.ContratRepositoryPort;
+import mg.tana.location.application.port.out.EventStorePort;
+import mg.tana.location.application.port.out.ProduitRepositoryPort;
+import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.event.EventEntity;
+import mg.tana.location.domain.event.type.UserCreatedEvent;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
+
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class LocationManagementService implements UserManagementUseCase, ContratManagementUseCase, ProduitManagementUseCase, EventQueryUseCase {
 
+    @Inject
+    UserRepositoryPort userRepositoryPort;
+
+    @Inject
+    ContratRepositoryPort contratRepositoryPort;
+
+    @Inject
+    ProduitRepositoryPort produitRepositoryPort;
+
+    @Inject
+    EventStorePort eventStorePort;
 
     @Override
     public Contrat createContrat(CreateContratCommand command) {
@@ -41,8 +60,24 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
+    @Transactional
     public User createUser(CreateUserCommand command) {
-        return null;
+        User user = mapCommandToEntity(command);
+        userRepositoryPort.save(user);
+
+        UserCreatedEvent userCreatedEvent = new UserCreatedEvent(
+                user.getId(),
+                user.getNom(),
+                user.getPrenom(),
+                user.getDateNaissance(),
+                user.getCin(),
+                user.getContrat() != null ? user.getContrat().getId() : null,
+                user.isValide()
+        );
+
+        eventStorePort.append(userCreatedEvent.getClass().getSimpleName(), user.getId(), userCreatedEvent);
+
+        return user;
     }
 
     @Override
@@ -52,11 +87,30 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
 
     @Override
     public List<User> listUsers() {
-        return List.of();
+        return userRepositoryPort.findAll();
     }
 
     @Override
     public List<EventEntity> listEvents() {
-        return List.of();
+        return eventStorePort.readAll();
     }
+
+    private User mapCommandToEntity(CreateUserCommand userCommand) {
+        Contrat contrat = null;
+        if (userCommand.contratId() != null) {
+            Optional<Contrat> contratOptional = contratRepositoryPort.findById(userCommand.contratId());
+            contrat = contratOptional.orElseThrow(() -> new IllegalArgumentException("Contrat introuvable: " + userCommand.contratId()));
+        }
+
+        return new User(
+                null,
+                userCommand.nom(),
+                userCommand.prenom(),
+                userCommand.dateNaissance(),
+                userCommand.cin(),
+                contrat,
+                userCommand.valide()
+        );
+    }
+
 }

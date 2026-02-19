@@ -1,7 +1,5 @@
 package mg.tana.location.infrastructure.in.rest.dto;
 
-import mg.tana.location.domain.model.Contrat;
-
 import java.time.LocalDate;
 
 public record CreateUserRequest (
@@ -9,6 +7,7 @@ public record CreateUserRequest (
         String prenom,
         LocalDate dateNaissance,
         String cin,
-        Contrat contrat
+        Long contratId,
+        boolean valide
 ) {
 }

@@ -1,15 +1,12 @@
 package mg.tana.location.domain.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class AggregateRoot {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public abstract class AggregateRoot extends PanacheEntity {
 
     private boolean valide;
 
