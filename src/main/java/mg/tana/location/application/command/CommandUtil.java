@@ -1,8 +1,11 @@
 package mg.tana.location.application.command;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import mg.tana.location.application.port.out.ContratRepositoryPort;
+import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
@@ -14,6 +17,9 @@ public class CommandUtil {
 
     @Inject
     ContratRepositoryPort contratRepositoryPort;
+
+    @Inject
+    UserRepositoryPort userRepositoryPort;
 
     public User mapUserCommandToEntity(CreateUserCommand userCommand) {
         Contrat contrat = null;
@@ -44,8 +50,25 @@ public class CommandUtil {
         return contrat;
     }
 
-    public static Produit mapProduitCommandToEntity(CreateProduitCommand produitCommand) {
+    public Produit mapProduitCommandToEntity(CreateProduitCommand produitCommand) {
         return null;
     }
+
+    public User mapUserAssignementContrat(AssignContratToUserCommand assignContratToUserCommand) {
+        Optional<User> user = userRepositoryPort.findById(assignContratToUserCommand.userId());
+        if (!user.isPresent()) {
+            throw new NotFoundException("Utilisateur " + assignContratToUserCommand.userId() + " introuvable");
+        }
+
+        Optional<Contrat> contrat = contratRepositoryPort.findById(assignContratToUserCommand.contratId());
+        if (!contrat.isPresent()) {
+            throw new NotFoundException("Contrat " + assignContratToUserCommand.contratId() + " introuvable");
+        }
+
+        user.get().setContrat(contrat.get());
+
+        return user.get();
+    }
+
 
 }

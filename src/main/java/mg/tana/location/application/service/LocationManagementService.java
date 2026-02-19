@@ -1,6 +1,5 @@
 package mg.tana.location.application.service;
 
-import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -15,11 +14,11 @@ import mg.tana.location.application.port.out.ProduitRepositoryPort;
 import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.event.EventEntity;
 import mg.tana.location.domain.event.type.ContratCreatedEvent;
+import mg.tana.location.domain.event.type.UserContratAssignedEvent;
 import mg.tana.location.domain.event.type.UserCreatedEvent;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -109,7 +108,13 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
 
     @Override
     public User assignContratToUser(AssignContratToUserCommand command) {
-        return null;
+        User user = commandUtil.mapUserAssignementContrat(command);
+        userRepositoryPort.save(user);
+
+        UserContratAssignedEvent contratAssignedEvent = new UserContratAssignedEvent(command.userId(), command.contratId());
+        eventStorePort.append(contratAssignedEvent.getClass().getSimpleName(), user.getId(), contratAssignedEvent);
+
+        return user;
     }
 
     @Override
