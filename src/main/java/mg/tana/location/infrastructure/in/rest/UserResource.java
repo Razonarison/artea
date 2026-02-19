@@ -31,6 +31,7 @@ public class UserResource {
                 request.nom(),
                 request.prenom(),
                 request.dateNaissance(),
+                request.dateEmbauche(),
                 request.cin(),
                 request.contratId(),
                 request.valide()
@@ -40,6 +41,12 @@ public class UserResource {
     @GET
     public List<User> listUsers() {
         return userManagement.listUsers();
+    }
+
+    @GET
+    @Path("/{userId}")
+    public User findUser(@PathParam("userId") Long userId) {
+        return userManagement.findUser(userId);
     }
 
     @POST

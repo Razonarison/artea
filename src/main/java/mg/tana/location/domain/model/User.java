@@ -12,6 +12,7 @@ public class User extends AggregateRoot {
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
+    private LocalDate dateEmbauche;
     private String cin;
 
     @ManyToOne
@@ -22,14 +23,17 @@ public class User extends AggregateRoot {
     public User() {
     }
 
-    public User(Long id, String nom, String prenom, LocalDate dateNaissance, String cin, Contrat contrat, boolean valide) {
+    public User(Long id, String nom, String prenom, LocalDate dateNaissance, LocalDate dateEmbauche, String cin, Contrat contrat, boolean valide) {
         super(id, valide);
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
+        this.dateEmbauche = dateEmbauche;
         this.cin = cin;
         this.contrat = contrat;
     }
+
+
 
     public String getNom() {
         return nom;
@@ -69,5 +73,13 @@ public class User extends AggregateRoot {
 
     public void setContrat(Contrat contrat) {
         this.contrat = contrat;
+    }
+
+    public LocalDate getDateEmbauche() {
+        return dateEmbauche;
+    }
+
+    public void setDateEmbauche(LocalDate dateEmbauche) {
+        this.dateEmbauche = dateEmbauche;
     }
 }

@@ -10,6 +10,8 @@ public interface UserManagementUseCase {
 
     User createUser(CreateUserCommand command);
 
+    User findUser(Long userId);
+
     User assignContratToUser(AssignContratToUserCommand command);
 
     List<User> listUsers();

@@ -1,12 +1,10 @@
 package mg.tana.location.application.service;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import mg.tana.location.application.command.AssignContratToUserCommand;
-import mg.tana.location.application.command.CreateContratCommand;
-import mg.tana.location.application.command.CreateProduitCommand;
-import mg.tana.location.application.command.CreateUserCommand;
+import mg.tana.location.application.command.*;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
 import mg.tana.location.application.port.in.EventQueryUseCase;
 import mg.tana.location.application.port.in.ProduitManagementUseCase;
@@ -16,6 +14,7 @@ import mg.tana.location.application.port.out.EventStorePort;
 import mg.tana.location.application.port.out.ProduitRepositoryPort;
 import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.event.EventEntity;
+import mg.tana.location.domain.event.type.ContratCreatedEvent;
 import mg.tana.location.domain.event.type.UserCreatedEvent;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
@@ -39,9 +38,26 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     @Inject
     EventStorePort eventStorePort;
 
+    @Inject
+    CommandUtil commandUtil;
+
     @Override
     public Contrat createContrat(CreateContratCommand command) {
-        return null;
+        Contrat contrat = commandUtil.mapContratCommandToEntity(command);
+        contratRepositoryPort.save(contrat);
+
+        ContratCreatedEvent contratCreatedEvent = new ContratCreatedEvent(
+            contrat.getId(),
+            contrat.getType(),
+            contrat.getDebutContrat(),
+            contrat.getFinContrat(),
+            contrat.getSalaireBase(),
+            contrat.isValide()
+        );
+
+        eventStorePort.append(contratCreatedEvent.getClass().getSimpleName(), contrat.getId(), contratCreatedEvent);
+
+        return contrat;
     }
 
     @Override
@@ -62,7 +78,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     @Override
     @Transactional
     public User createUser(CreateUserCommand command) {
-        User user = mapCommandToEntity(command);
+        User user = commandUtil.mapUserCommandToEntity(command);
         userRepositoryPort.save(user);
 
         UserCreatedEvent userCreatedEvent = new UserCreatedEvent(
@@ -70,6 +86,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
                 user.getNom(),
                 user.getPrenom(),
                 user.getDateNaissance(),
+                user.getDateEmbauche(),
                 user.getCin(),
                 user.getContrat() != null ? user.getContrat().getId() : null,
                 user.isValide()
@@ -78,6 +95,16 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
         eventStorePort.append(userCreatedEvent.getClass().getSimpleName(), user.getId(), userCreatedEvent);
 
         return user;
+    }
+
+    @Override
+    public User findUser(Long userId) {
+        Optional<User> user = userRepositoryPort.findById(userId);
+        if (user.isPresent()) {
+            return user.get();
+        }
+
+        return null;
     }
 
     @Override
@@ -93,24 +120,6 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     @Override
     public List<EventEntity> listEvents() {
         return eventStorePort.readAll();
-    }
-
-    private User mapCommandToEntity(CreateUserCommand userCommand) {
-        Contrat contrat = null;
-        if (userCommand.contratId() != null) {
-            Optional<Contrat> contratOptional = contratRepositoryPort.findById(userCommand.contratId());
-            contrat = contratOptional.orElseThrow(() -> new IllegalArgumentException("Contrat introuvable: " + userCommand.contratId()));
-        }
-
-        return new User(
-                null,
-                userCommand.nom(),
-                userCommand.prenom(),
-                userCommand.dateNaissance(),
-                userCommand.cin(),
-                contrat,
-                userCommand.valide()
-        );
     }
 
 }

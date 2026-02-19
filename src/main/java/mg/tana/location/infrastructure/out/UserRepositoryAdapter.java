@@ -19,20 +19,21 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
             return user;
         }
 
-        User existing = User.findById(user.getId());
-        if (existing == null) {
+        Optional<User> existing = findById(user.getId());
+        if (!existing.isPresent()) {
             user.persist();
             return user;
         }
 
-        existing.setNom(user.getNom());
-        existing.setPrenom(user.getPrenom());
-        existing.setDateNaissance(user.getDateNaissance());
-        existing.setCin(user.getCin());
-        existing.setContrat(user.getContrat());
-        existing.setValide(user.isValide());
+        existing.get().setNom(user.getNom());
+        existing.get().setPrenom(user.getPrenom());
+        existing.get().setDateNaissance(user.getDateNaissance());
+        existing.get().setDateEmbauche(user.getDateEmbauche());
+        existing.get().setCin(user.getCin());
+        existing.get().setContrat(user.getContrat());
+        existing.get().setValide(user.isValide());
 
-        return existing;
+        return existing.get();
     }
 
     @Override

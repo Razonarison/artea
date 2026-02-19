@@ -13,25 +13,24 @@ public class ContratRepositoryAdapter implements ContratRepositoryPort {
 
     @Override
     @Transactional
-    public Contrat save(Contrat contrat) {
+    public Contrat save(Contrat contrat)  {
         if (contrat.getId() == null) {
             contrat.persist();
             return contrat;
         }
 
-        Contrat existing = Contrat.findById(contrat.getId());
-        if (existing == null) {
+        Optional<Contrat> existing = findById(contrat.getId());
+        if (!existing.isPresent()) {
             contrat.persist();
             return contrat;
         }
 
-        existing.setType(contrat.getType());
-        existing.setDebutContrat(contrat.getDebutContrat());
-        existing.setFinContrat(contrat.getFinContrat());
-        existing.setSalaireBase(contrat.getSalaireBase());
-        existing.setValide(contrat.isValide());
+        existing.get().setType(contrat.getType());
+        existing.get().setDebutContrat(contrat.getDebutContrat());
+        existing.get().setFinContrat(contrat.getFinContrat());
+        existing.get().setValide(contrat.isValide());
 
-        return existing;
+        return existing.get();
     }
 
     @Override

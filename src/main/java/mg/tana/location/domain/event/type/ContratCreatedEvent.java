@@ -1,11 +1,13 @@
 package mg.tana.location.domain.event.type;
 
+import mg.tana.location.domain.model.type.ContratType;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record ContratCreatedEvent(
         Long contratId,
-        String type,
+        ContratType type,
         LocalDate debutContrat,
         LocalDate finContrat,
         BigDecimal salaireBase,

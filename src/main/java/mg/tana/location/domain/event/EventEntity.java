@@ -3,6 +3,8 @@ package mg.tana.location.domain.event;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "event_store")
 public class EventEntity extends PanacheEntity {
@@ -11,8 +13,10 @@ public class EventEntity extends PanacheEntity {
     private Long aggregateId;
     @Lob
     private String payload;
+    private Instant occuredOn;
 
     public EventEntity() {
+        this.occuredOn = Instant.now();
     }
 
     public Long getId() {
@@ -45,5 +49,13 @@ public class EventEntity extends PanacheEntity {
 
     public void setPayload(String payload) {
         this.payload = payload;
+    }
+
+    public Instant getOccuredOn() {
+        return occuredOn;
+    }
+
+    public void setOccuredOn(Instant occuredOn) {
+        this.occuredOn = occuredOn;
     }
 }
