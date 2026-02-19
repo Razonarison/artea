@@ -1,5 +1,7 @@
 package mg.tana.location.application.command;
 
+import mg.tana.location.domain.model.Contrat;
+
 import java.time.LocalDate;
 
 public record CreateUserCommand(
@@ -7,6 +9,6 @@ public record CreateUserCommand(
         String prenom,
         LocalDate dateNaissance,
         String cin,
-        boolean valide
+        Contrat contrat
 ) {
 }

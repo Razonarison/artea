@@ -53,13 +53,14 @@ public class LocationResource {
                 request.prenom(),
                 request.dateNaissance(),
                 request.cin(),
-                request.valide()
+                request.contrat()
         ));
     }
 
     @GET
     @Path("/users")
     public List<User> listUsers() {
+
         return userManagement.listUsers();
     }
 

@@ -1,20 +1,23 @@
 package mg.tana.location.application.service;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import mg.tana.location.application.command.AssignContratToUserCommand;
 import mg.tana.location.application.command.CreateContratCommand;
 import mg.tana.location.application.command.CreateProduitCommand;
 import mg.tana.location.application.command.CreateUserCommand;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
+import mg.tana.location.application.port.in.EventQueryUseCase;
 import mg.tana.location.application.port.in.ProduitManagementUseCase;
 import mg.tana.location.application.port.in.UserManagementUseCase;
+import mg.tana.location.domain.event.EventEntity;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
 import java.util.List;
 
 @ApplicationScoped
-public class LocationManagementService implements UserManagementUseCase, ContratManagementUseCase, ProduitManagementUseCase {
+public class LocationManagementService implements UserManagementUseCase, ContratManagementUseCase, ProduitManagementUseCase, EventQueryUseCase {
 
 
     @Override
@@ -49,6 +52,11 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
 
     @Override
     public List<User> listUsers() {
+        return List.of();
+    }
+
+    @Override
+    public List<EventEntity> listEvents() {
         return List.of();
     }
 }

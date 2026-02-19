@@ -1,7 +1,8 @@
 package mg.tana.location.domain.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
@@ -13,20 +14,21 @@ public class User extends AggregateRoot {
     private LocalDate dateNaissance;
     private String cin;
 
-    @Column(name = "contrat_id")
-    private Long contratId;
+    @ManyToOne
+    @JoinColumn(name = "contrat_id")
+    private Contrat contrat;
 
 
     public User() {
     }
 
-    public User(Long id, String nom, String prenom, LocalDate dateNaissance, String cin, Long contratId, boolean valide) {
+    public User(Long id, String nom, String prenom, LocalDate dateNaissance, String cin, Contrat contrat, boolean valide) {
         super(id, valide);
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.cin = cin;
-        this.contratId = contratId;
+        this.contrat = contrat;
     }
 
     public String getNom() {
@@ -61,11 +63,11 @@ public class User extends AggregateRoot {
         this.cin = cin;
     }
 
-    public Long getContratId() {
-        return contratId;
+    public Contrat getContrat() {
+        return contrat;
     }
 
-    public void setContratId(Long contratId) {
-        this.contratId = contratId;
+    public void setContrat(Contrat contrat) {
+        this.contrat = contrat;
     }
 }
