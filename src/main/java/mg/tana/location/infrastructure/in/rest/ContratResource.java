@@ -14,7 +14,7 @@ import mg.tana.location.infrastructure.in.rest.dto.CreateContratRequest;
 
 import java.util.List;
 
-@Path("/api/contrats")
+@Path("contrats")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ContratResource {
