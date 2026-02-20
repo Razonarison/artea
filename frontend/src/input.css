@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Tailwind v4: scanner les templates Quarkus hors du dossier frontend */
+@source "../../src/main/resources/templates/**/*.html";
+
+/* DaisyUI avec Tailwind v4 se charge directement depuis le CSS */
+@plugin "daisyui" {
+    themes: light --default, silk;
+}
