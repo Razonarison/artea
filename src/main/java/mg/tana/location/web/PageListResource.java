@@ -8,14 +8,12 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import mg.tana.location.application.command.Util;
-import mg.tana.location.application.port.in.UserManagementUseCase;
+import mg.tana.location.application.service.Util;
 import mg.tana.location.application.service.LocationManagementService;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 @Path("list")
@@ -31,16 +29,16 @@ public class PageListResource {
 
     @GET
     @Path("users")
-    public TemplateInstance makeListeUsers() {
+    public TemplateInstance makeListeUsers() throws IllegalAccessException {
         List<User> users = managementService.listUsers();
         List<String> headers = Util.getClassFieldsString(User.class);
 
-        return listePage.data("title", User.class.getSimpleName(), "headers", headers);
+        return listePage.data("title", User.class.getSimpleName(), "headers", headers, "users", users);
     }
 
     @GET
     @Path("contracts")
-    public TemplateInstance makeListeContrats() {
+    public TemplateInstance makeListeContrats() throws IllegalAccessException {
         List<Contrat> contrats = managementService.listContrats();
         List<String> headers = Util.getClassFieldsString(Contrat.class);
 
@@ -49,7 +47,7 @@ public class PageListResource {
 
     @GET
     @Path("products")
-    public TemplateInstance makeListeProduits() {
+    public TemplateInstance makeListeProduits() throws IllegalAccessException {
         List<Produit> produits = managementService.listProduits();
         List<String> headers = Util.getClassFieldsString(Produit.class);
 

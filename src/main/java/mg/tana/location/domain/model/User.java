@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import mg.tana.location.application.service.ChampLibelle;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -12,7 +14,11 @@ import java.util.Arrays;
 public class User extends AggregateRoot {
     private String nom;
     private String prenom;
+
+    @ChampLibelle("Date de naissance")
     private LocalDate dateNaissance;
+
+    @ChampLibelle("Date d'embauche")
     private LocalDate dateEmbauche;
     private String cin;
 

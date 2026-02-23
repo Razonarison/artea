@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import mg.tana.location.application.service.ChampLibelle;
 import mg.tana.location.domain.model.type.ProduitSousCategorie;
 import java.math.BigDecimal;
 
@@ -14,9 +15,13 @@ public class Produit extends AggregateRoot {
 
     @Enumerated(EnumType.STRING)
     private ProduitSousCategorie sousCategorie;
+    @ChampLibelle("Description")
     private String itemDescription;
+    @ChampLibelle("PU achat")
     private BigDecimal puAchat;
+    @ChampLibelle("PU location")
     private BigDecimal puLocation;
+    @ChampLibelle("PU caution")
     private BigDecimal puCaution;
     private String lienAchat;
 

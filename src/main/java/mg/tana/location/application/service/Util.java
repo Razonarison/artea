@@ -1,11 +1,11 @@
-package mg.tana.location.application.command;
+package mg.tana.location.application.service;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
 public final class Util {
 
-    public static List<String> getClassFieldsString(Class<?> type) {
+    public static List<String> getClassFieldsString(Class<?> type) throws IllegalAccessException {
         if (type == null) return Collections.emptyList();
         List<Class<?>> hierarchy = new ArrayList<>();
         for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
@@ -18,9 +18,16 @@ public final class Util {
             for (Field f : c.getDeclaredFields()) {
                 f.setAccessible(true);
 
-                if (!f.getName().startsWith("$$")) {
+                if (f.getName().startsWith("$$")) {
+                    continue;
+                }
+
+                if (f.isAnnotationPresent(ChampLibelle.class)) {
+                    result.add(f.getAnnotation(ChampLibelle.class).value());
+                } else {
                     result.add(f.getName());
                 }
+
             }
         }
 
