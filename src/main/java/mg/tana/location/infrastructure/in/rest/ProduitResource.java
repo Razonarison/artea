@@ -14,7 +14,7 @@ import mg.tana.location.infrastructure.in.rest.dto.CreateProduitRequest;
 
 import java.util.List;
 
-@Path("produits")
+@Path("api/produits")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProduitResource {

@@ -17,7 +17,7 @@ import mg.tana.location.infrastructure.in.rest.dto.CreateUserRequest;
 
 import java.util.List;
 
-@Path("users")
+@Path("api/users")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {

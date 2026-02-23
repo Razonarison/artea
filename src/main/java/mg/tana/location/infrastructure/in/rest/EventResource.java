@@ -10,7 +10,7 @@ import mg.tana.location.domain.event.EventEntity;
 
 import java.util.List;
 
-@Path("events")
+@Path("api/events")
 @Produces(MediaType.APPLICATION_JSON)
 public class EventResource {
 
