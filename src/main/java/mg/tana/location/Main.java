@@ -10,9 +10,9 @@ public class Main {
 
     public static void main(String[] args) throws IllegalAccessException {
         User u = new User();
-        List<Field> fields = Util.getClassFields(User.class);
-        for (Field f : fields) {
-            System.out.println(f.getName());
+        List<String> fields = Util.getClassFieldsString(User.class);
+        for (String s : fields) {
+            System.out.println(s);
         }
 
     }
