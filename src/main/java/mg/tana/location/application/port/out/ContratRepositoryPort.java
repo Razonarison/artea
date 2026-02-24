@@ -4,13 +4,12 @@ import mg.tana.location.domain.model.Contrat;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ContratRepositoryPort {
 
     Contrat save(Contrat contrat);
 
-    Optional<Contrat> findById(UUID id);
+    Optional<Contrat> findById(Long id);
 
     List<Contrat> findAll();
 }

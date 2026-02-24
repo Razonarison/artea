@@ -1,15 +1,14 @@
 package mg.tana.location.domain.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
-@MappedSuperclass
-public abstract class AggregateRoot {
+import java.util.List;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+@MappedSuperclass
+public abstract class AggregateRoot extends PanacheEntity {
 
     private boolean valide;
 
@@ -40,4 +39,5 @@ public abstract class AggregateRoot {
     public void setValide(boolean valide) {
         this.valide = valide;
     }
+
 }

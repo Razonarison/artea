@@ -4,13 +4,12 @@ import mg.tana.location.domain.model.Produit;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ProduitRepositoryPort {
 
     Produit save(Produit produit);
 
-    Optional<Produit> findById(UUID id);
+    Optional<Produit> findById(Long id);
 
     List<Produit> findAll();
 }

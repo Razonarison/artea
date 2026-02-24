@@ -45,3 +45,4 @@ nb-configuration.xml
 # TLS Certificates
 .certs/
 src/main/resources/application.properties
+frontend/node_modules

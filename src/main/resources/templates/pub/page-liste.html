@@ -1,0 +1,25 @@
+{#include pub/layout/base}
+    <h1>Liste {title}</h1>
+    <div class="overflow-x-auto">
+        <table class="table table-zebra">
+            <!-- head -->
+            <thead>
+            <tr>
+                {#for header in data.headers}
+                    <th>{header}</th>
+                {/for}
+            </tr>
+            </thead>
+            <tbody>
+            <!-- row 1 -->
+            {#for rows in data.rows}
+                <tr>
+                    {#for row in rows}
+                    <th>{row}</th>
+                    {/for}
+                </tr>
+            {/for}
+            </tbody>
+        </table>
+    </div>
+{/include}

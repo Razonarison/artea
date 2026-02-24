@@ -1,22 +1,28 @@
 package mg.tana.location.domain.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import mg.tana.location.application.service.FormatNumber;
+import mg.tana.location.domain.model.type.ContratType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "contrat")
 public class Contrat extends AggregateRoot {
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ContratType type;
     private LocalDate debutContrat;
     private LocalDate finContrat;
+    @FormatNumber()
     private BigDecimal salaireBase;
 
     public Contrat() {
     }
 
-    public Contrat(Long id, String type, LocalDate debutContrat, LocalDate finContrat, BigDecimal salaireBase, boolean valide) {
+    public Contrat(Long id, ContratType type, LocalDate debutContrat, LocalDate finContrat, BigDecimal salaireBase, boolean valide) {
         super(id, valide);
         this.type = type;
         this.debutContrat = debutContrat;
@@ -24,11 +30,11 @@ public class Contrat extends AggregateRoot {
         this.salaireBase = salaireBase;
     }
 
-    public String getType() {
+    public ContratType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ContratType type) {
         this.type = type;
     }
 
