@@ -46,7 +46,9 @@ public final class PageUtil {
             if (f.isAnnotationPresent(FormatNumber.class)) {
                 String objectValue = Util.formatNumber((BigDecimal) f.get(instance));
                 values.add(objectValue);
-            } else {
+            } else if(f.get(instance) == null) {
+                values.add("-");
+            }else {
                 values.add(f.get(instance));
             }
         }

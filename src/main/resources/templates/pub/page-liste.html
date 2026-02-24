@@ -1,8 +1,16 @@
 {#include pub/layout/base}
-    <h1>Liste {title}</h1>
-    <div class="overflow-x-auto">
+    <div class="flex justify-between px-4">
+        <h1>Liste {title}</h1>
+        <button class="btn btn-sm btn-neutral">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Ajouter
+        </button>
+    </div>
+
+    <div class="overflow-x-auto mt-4">
         <table class="table table-zebra">
-            <!-- head -->
             <thead>
             <tr>
                 {#for header in data.headers}
@@ -11,11 +19,14 @@
             </tr>
             </thead>
             <tbody>
-            <!-- row 1 -->
             {#for rows in data.rows}
                 <tr>
                     {#for row in rows}
-                    <th>{row}</th>
+                        {#if row_isFirst}
+                            <th><a class="link" href="#">{row}</a></th>
+                        {#else}
+                            <th>{row}</th>
+                        {/if}
                     {/for}
                 </tr>
             {/for}
