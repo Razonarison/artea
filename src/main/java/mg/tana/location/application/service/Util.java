@@ -1,78 +1,16 @@
 package mg.tana.location.application.service;
 
-import mg.tana.location.web.ChampMeta;
-
-import java.lang.reflect.Field;
-import java.util.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public final class Util {
+    public static final String NUMBER_FORMAT = "#,##0.00";
 
-    public static List<ChampMeta> getChampsMeta(Class<?> type) {
-        List<Class<?>> hierarchy = new ArrayList<>();
-        for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
-            hierarchy.add(c);
-        }
-        Collections.reverse(hierarchy);
-
-        List<ChampMeta> metas = new ArrayList<>();
-
-        for (Class<?> c : hierarchy) {
-            for (Field f : c.getDeclaredFields()) {
-                if (f.isSynthetic() || f.getName().startsWith("$$")) continue;
-
-                String label = f.isAnnotationPresent(ChampLibelle.class)
-                        ? f.getAnnotation(ChampLibelle.class).value()
-                        : f.getName();
-
-                metas.add(new ChampMeta(f.getName(), label));
-            }
-        }
-
-        return metas;
-    }
-
-    public static List<Object> getValues(Object instance, List<ChampMeta> champs) throws IllegalAccessException {
-        if (instance == null) return null;
-
-        List<Object> values = new ArrayList<>();
-        Class<?> clazz = instance.getClass();
-        for(ChampMeta champ : champs) {
-            Field f= getField(clazz, champ.fieldName());
-            f.setAccessible(true);
-            values.add(f.get(instance));
-        }
-
-        return values;
-    }
-
-    private static Field getField(Class<?> type, String name) {
-        for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
-            try {
-                return c.getDeclaredField(name);
-            } catch (NoSuchFieldException ignored) {}
-        }
-
-        throw new RuntimeException("Champ introuvable : " + name);
-    }
-
-
-    public static Map<String, Object> makePageList(List<?> entities, Class<?> type) throws IllegalAccessException {
-        List<ChampMeta> metas = getChampsMeta(type);
-
-        List<String> headers = metas.stream()
-                .map(ChampMeta::fieldLabel)
-                .toList();
-
-        List<List<Object>> rows = new ArrayList<>();
-        for (Object e : entities) {
-            rows.add(getValues(e, metas));
-        }
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("headers", headers);
-        model.put("rows", rows);
-        return model;
-
+    public static String formatNumber(BigDecimal numberToFormat) {
+        DecimalFormatSymbols decimalFormatSymbols  = DecimalFormatSymbols.getInstance(new Locale("fr", "FR"));
+        return new DecimalFormat("#,##0.00", decimalFormatSymbols).format(numberToFormat);
     }
 
 }

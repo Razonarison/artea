@@ -1,6 +1,5 @@
 package mg.tana.location.web;
 
-import io.quarkus.logging.Log;
 import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
@@ -9,7 +8,6 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import mg.tana.location.application.service.Util;
 import mg.tana.location.application.service.LocationManagementService;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
@@ -33,7 +31,7 @@ public class PageListResource {
     @Path("users")
     public TemplateInstance makeListeUsers() throws IllegalAccessException {
         List<User> users = managementService.listUsers();
-        Map<String, Object> data = Util.makePageList(users, User.class);
+        Map<String, Object> data = PageUtil.makePageList(users, User.class);
         return listePage.data("title", User.class.getSimpleName(), "data", data);
     }
 
@@ -41,7 +39,7 @@ public class PageListResource {
     @Path("contracts")
     public TemplateInstance makeListeContrats() throws IllegalAccessException {
         List<Contrat> contrats = managementService.listContrats();
-        Map<String, Object> data = Util.makePageList(contrats, Contrat.class);
+        Map<String, Object> data = PageUtil.makePageList(contrats, Contrat.class);
         return listePage.data("title", Contrat.class.getSimpleName(), "data", data);
     }
 
@@ -49,7 +47,7 @@ public class PageListResource {
     @Path("products")
     public TemplateInstance makeListeProduits() throws IllegalAccessException {
         List<Produit> produits = managementService.listProduits();
-        Map<String, Object> data = Util.makePageList(produits, Produit.class);
+        Map<String, Object> data = PageUtil.makePageList(produits, Produit.class);
         return listePage.data("title", Produit.class.getSimpleName(), "data", data);
     }
 
