@@ -4,12 +4,14 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import mg.tana.location.application.service.HideChampInsert;
 
 import java.util.List;
 
 @MappedSuperclass
 public abstract class AggregateRoot extends PanacheEntity {
 
+    @HideChampInsert
     private boolean valide;
 
     protected AggregateRoot() {

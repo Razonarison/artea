@@ -2,6 +2,7 @@ package mg.tana.location.web;
 
 import mg.tana.location.application.service.ChampLibelle;
 import mg.tana.location.application.service.FormatNumber;
+import mg.tana.location.application.service.HideChampInsert;
 import mg.tana.location.application.service.Util;
 
 import java.lang.reflect.Field;
@@ -9,8 +10,11 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public final class PageUtil {
+    private static final String FOR_INSERT = "INSERT";
+    private static final String FOR_LIST = "LIST";
 
-    public static List<ChampMeta> getChampsMeta(Class<?> type) {
+
+    public static List<ChampMeta> getChampsMeta(Class<?> type, String usedFor) {
         List<Class<?>> hierarchy = new ArrayList<>();
         for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
             hierarchy.add(c);
@@ -22,12 +26,16 @@ public final class PageUtil {
         for (Class<?> c : hierarchy) {
             for (Field f : c.getDeclaredFields()) {
                 if (f.isSynthetic() || f.getName().startsWith("$$")) continue;
+                if (FOR_INSERT.equals(usedFor) && f.isAnnotationPresent(HideChampInsert.class)) continue;
+                if (FOR_INSERT.equals(usedFor) && f.getName().equals("id")) continue;
 
                 String label = f.isAnnotationPresent(ChampLibelle.class)
                         ? f.getAnnotation(ChampLibelle.class).value()
                         : f.getName();
 
+
                 metas.add(new ChampMeta(f.getName(), label));
+
             }
         }
 
@@ -68,8 +76,7 @@ public final class PageUtil {
 
 
     public static Map<String, Object> makePageList(List<?> entities, Class<?> type) throws IllegalAccessException {
-        List<ChampMeta> metas = getChampsMeta(type);
-
+        List<ChampMeta> metas = (List<ChampMeta>) getChampsMeta(type, FOR_LIST);
         List<String> headers = metas.stream()
                 .map(ChampMeta::fieldLabel)
                 .toList();
@@ -82,8 +89,21 @@ public final class PageUtil {
         Map<String, Object> model = new HashMap<>();
         model.put("headers", headers);
         model.put("rows", rows);
+
         return model;
 
+    }
+
+    public static Map<String, Object> magePageInsert(Class<?> type) {
+        List<ChampMeta> metas = (List<ChampMeta>) getChampsMeta(type, FOR_INSERT);
+        List<String> headers = metas.stream()
+                .map(ChampMeta::fieldLabel)
+                .toList();
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("headers", headers);
+
+        return model;
     }
 
 }
