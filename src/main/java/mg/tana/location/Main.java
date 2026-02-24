@@ -8,11 +8,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IllegalAccessException {
-        User u = new User();
-        List<String> fields = Util.getClassFieldsString(User.class);
-        for (String s : fields) {
-            System.out.println(s);
-        }
 
     }
 
