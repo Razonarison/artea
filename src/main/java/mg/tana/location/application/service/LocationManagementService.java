@@ -61,7 +61,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
 
     @Override
     public List<Contrat> listContrats() {
-        return List.of();
+        return contratRepositoryPort.findAll();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
 
     @Override
     public List<Produit> listProduits() {
-        return List.of();
+        return produitRepositoryPort.findAll();
     }
 
     @Override

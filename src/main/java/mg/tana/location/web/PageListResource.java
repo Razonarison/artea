@@ -34,7 +34,6 @@ public class PageListResource {
     public TemplateInstance makeListeUsers() throws IllegalAccessException {
         List<User> users = managementService.listUsers();
         Map<String, Object> data = Util.makePageList(users, User.class);
-
         return listePage.data("title", User.class.getSimpleName(), "data", data);
     }
 
