@@ -32,7 +32,7 @@ public class PageListResource {
     public TemplateInstance makeListeUsers() throws IllegalAccessException {
         List<User> users = managementService.listUsers();
         Map<String, Object> data = PageUtil.makePageList(users, User.class);
-        return listePage.data("title", User.class.getSimpleName(), "data", data);
+        return listePage.data("title", User.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/user");
     }
 
     @GET
@@ -40,7 +40,7 @@ public class PageListResource {
     public TemplateInstance makeListeContrats() throws IllegalAccessException {
         List<Contrat> contrats = managementService.listContrats();
         Map<String, Object> data = PageUtil.makePageList(contrats, Contrat.class);
-        return listePage.data("title", Contrat.class.getSimpleName(), "data", data);
+        return listePage.data("title", Contrat.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/contract");
     }
 
     @GET
@@ -48,7 +48,7 @@ public class PageListResource {
     public TemplateInstance makeListeProduits() throws IllegalAccessException {
         List<Produit> produits = managementService.listProduits();
         Map<String, Object> data = PageUtil.makePageList(produits, Produit.class);
-        return listePage.data("title", Produit.class.getSimpleName(), "data", data);
+        return listePage.data("title", Produit.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/product");
     }
 
 }

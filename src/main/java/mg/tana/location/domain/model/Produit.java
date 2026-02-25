@@ -14,6 +14,7 @@ public class Produit extends AggregateRoot {
     private String categorie;
 
     @Enumerated(EnumType.STRING)
+    @ChampLibelle("Sous catégorie")
     private ProduitSousCategorie sousCategorie;
     @ChampLibelle("Description")
     private String itemDescription;
@@ -23,6 +24,7 @@ public class Produit extends AggregateRoot {
     private BigDecimal puLocation;
     @ChampLibelle("PU caution")
     private BigDecimal puCaution;
+    @ChampLibelle("Lien achat")
     private String lienAchat;
 
     public Produit() {

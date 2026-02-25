@@ -25,6 +25,7 @@ public final class PageUtil {
 
         for (Class<?> c : hierarchy) {
             for (Field f : c.getDeclaredFields()) {
+
                 if (f.isSynthetic() || f.getName().startsWith("$$")) continue;
                 if (FOR_INSERT.equals(usedFor) && f.isAnnotationPresent(HideChampInsert.class)) continue;
                 if (FOR_INSERT.equals(usedFor) && f.getName().equals("id")) continue;
@@ -33,9 +34,23 @@ public final class PageUtil {
                         ? f.getAnnotation(ChampLibelle.class).value()
                         : f.getName();
 
+                String fieldType = f.getType().getSimpleName();
+                String champMetaFieldType;
+                switch (fieldType) {
+                    case "String":
+                        champMetaFieldType = "text";
+                        break;
+                    case "LocalDate":
+                        champMetaFieldType = "date";
+                        break;
+                    case "BigDecimal":
+                        champMetaFieldType = "number";
+                        break;
+                    default:
+                        champMetaFieldType = "text";
+                }
 
-                metas.add(new ChampMeta(f.getName(), label));
-
+                metas.add(new ChampMeta(f.getName(), label, champMetaFieldType));
             }
         }
 
@@ -96,12 +111,17 @@ public final class PageUtil {
 
     public static Map<String, Object> magePageInsert(Class<?> type) {
         List<ChampMeta> metas = (List<ChampMeta>) getChampsMeta(type, FOR_INSERT);
-        List<String> headers = metas.stream()
+        List<String> labels = metas.stream()
                 .map(ChampMeta::fieldLabel)
                 .toList();
 
+        List<String> fieldTypes = metas.stream()
+                .map(ChampMeta::fieldType)
+                .toList();
+
         Map<String, Object> model = new HashMap<>();
-        model.put("headers", headers);
+        model.put("labels", labels);
+        model.put("types", fieldTypes);
 
         return model;
     }
