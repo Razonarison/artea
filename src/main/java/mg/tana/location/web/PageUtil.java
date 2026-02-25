@@ -1,5 +1,6 @@
 package mg.tana.location.web;
 
+import jakarta.persistence.ManyToOne;
 import mg.tana.location.application.service.ChampLibelle;
 import mg.tana.location.application.service.FormatNumber;
 import mg.tana.location.application.service.HideChampInsert;
@@ -25,7 +26,7 @@ public final class PageUtil {
 
         for (Class<?> c : hierarchy) {
             for (Field f : c.getDeclaredFields()) {
-
+                String champMetaFieldType;
                 if (f.isSynthetic() || f.getName().startsWith("$$")) continue;
                 if (FOR_INSERT.equals(usedFor) && f.isAnnotationPresent(HideChampInsert.class)) continue;
                 if (FOR_INSERT.equals(usedFor) && f.getName().equals("id")) continue;
@@ -35,7 +36,6 @@ public final class PageUtil {
                         : f.getName();
 
                 String fieldType = f.getType().getSimpleName();
-                String champMetaFieldType;
                 switch (fieldType) {
                     case "String":
                         champMetaFieldType = "text";
@@ -47,7 +47,9 @@ public final class PageUtil {
                         champMetaFieldType = "number";
                         break;
                     default:
-                        champMetaFieldType = "text";
+                        champMetaFieldType = (f.getType().isEnum() || f.isAnnotationPresent(ManyToOne.class))
+                                ? "select"
+                                : "text";
                 }
 
                 metas.add(new ChampMeta(f.getName(), label, champMetaFieldType));
@@ -111,6 +113,10 @@ public final class PageUtil {
 
     public static Map<String, Object> magePageInsert(Class<?> type) {
         List<ChampMeta> metas = (List<ChampMeta>) getChampsMeta(type, FOR_INSERT);
+        List<String> fieldNames = metas.stream()
+                .map(ChampMeta::fieldName)
+                .toList();
+
         List<String> labels = metas.stream()
                 .map(ChampMeta::fieldLabel)
                 .toList();
@@ -119,9 +125,28 @@ public final class PageUtil {
                 .map(ChampMeta::fieldType)
                 .toList();
 
+        List<List<String>> options = new ArrayList<>();
+        for (ChampMeta meta : metas) {
+            Field field = getField(type, meta.fieldName());
+            Class<?> fieldClass = field.getType();
+
+            if (fieldClass.isEnum()) {
+                List<String> enumValues = Arrays.stream(fieldClass.getEnumConstants())
+                        .map(Object::toString)
+                        .toList();
+                options.add(enumValues);
+            } else if (field.isAnnotationPresent(ManyToOne.class)) {
+                options.add(new ArrayList<>());
+            } else {
+                options.add(Collections.emptyList());
+            }
+        }
+
         Map<String, Object> model = new HashMap<>();
+        model.put("fieldNames", fieldNames);
         model.put("labels", labels);
         model.put("types", fieldTypes);
+        model.put("options", options);
 
         return model;
     }

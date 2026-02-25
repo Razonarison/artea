@@ -9,6 +9,7 @@ import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
+import mg.tana.location.domain.model.type.ProduitSousCategorie;
 
 import java.util.Optional;
 
@@ -51,7 +52,16 @@ public class CommandUtil {
     }
 
     public Produit mapProduitCommandToEntity(CreateProduitCommand produitCommand) {
-        return null;
+        Produit produit = new Produit();
+        produit.setCategorie(produitCommand.categorie());
+        produit.setSousCategorie(ProduitSousCategorie.valueOf(produitCommand.sousCategorie()));
+        produit.setItemDescription(produitCommand.itemDescription());
+        produit.setPuAchat(produitCommand.puAchat());
+        produit.setPuLocation(produitCommand.puLocation());
+        produit.setPuCaution(produitCommand.puCaution());
+        produit.setLienAchat(produitCommand.lienAchat());
+
+        return produit;
     }
 
     public User mapUserAssignementContrat(AssignContratToUserCommand assignContratToUserCommand) {

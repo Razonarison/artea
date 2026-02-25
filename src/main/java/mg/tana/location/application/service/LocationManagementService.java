@@ -14,6 +14,7 @@ import mg.tana.location.application.port.out.ProduitRepositoryPort;
 import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.event.EventEntity;
 import mg.tana.location.domain.event.type.ContratCreatedEvent;
+import mg.tana.location.domain.event.type.ProduitCreatedEvent;
 import mg.tana.location.domain.event.type.UserContratAssignedEvent;
 import mg.tana.location.domain.event.type.UserCreatedEvent;
 import mg.tana.location.domain.model.Contrat;
@@ -65,12 +66,30 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
+    @Transactional
     public Produit createProduit(CreateProduitCommand command) {
-        return null;
+        Produit produit = commandUtil.mapProduitCommandToEntity(command);
+        produitRepositoryPort.save(produit);
+
+        ProduitCreatedEvent produitCreatedEvent = new ProduitCreatedEvent(
+                produit.getId(),
+                produit.getCategorie(),
+                produit.getSousCategorie().toString(),
+                produit.getItemDescription(),
+                produit.getPuAchat(),
+                produit.getPuLocation(),
+                produit.getPuCaution(),
+                produit.getLienAchat()
+        );
+
+        eventStorePort.append(produitCreatedEvent.getClass().getSimpleName(), produit.getId(), produitCreatedEvent);
+
+        return produit;
     }
 
     @Override
     public List<Produit> listProduits() {
+
         return produitRepositoryPort.findAll();
     }
 

@@ -1,19 +1,30 @@
 {#include pub/layout/base}
     <div class="flex justify-center">
-        <fieldset class="fieldset bg-base-200 border-base-200 rounded-box w-md border p-4">
-            <legend class="fieldset-legend">{title}</legend>
-            {#for i in data.labels}
-                {@java.lang.Integer idx = i_index}
-                <label class="label">{data.labels.get(idx)}</label>
-                <input type="{data.types.get(idx)}" class="input w-md" />
-            {/for}
+        <form hx-post="{pageAppelInsert}" hx-ext="json-enc" hx-trigger="submit">
+            <fieldset class="fieldset bg-base-200 border-base-200 rounded-box w-md border p-4" >
+                <legend class="fieldset-legend">{title}</legend>
+                {#for i in data.labels}
+                    {@java.lang.Integer idx = i_index}
+                    <label class="label">{data.labels.get(idx)}</label>
+                    {#if data.types.get(idx) == 'select'}
+                        <select class="select w-md" name="{data.fieldNames.get(idx)}">
+                            <option disabled selected>Choisir une valeur</option>
+                            {#for option in data.options.get(idx)}
+                                <option value="{option}">{option}</option>
+                            {/for}
+                        </select>
+                    {#else}
+                        <input type="{data.types.get(idx)}" name="{data.fieldNames.get(idx)}" class="input w-md" />
+                    {/if}
+                {/for}
 
-            <button class="btn btn-sm btn-success mt-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                Enregistrer
-            </button>
-        </fieldset>
+                <button class="btn btn-sm btn-success mt-4" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Enregistrer
+                </button>
+            </fieldset>
+        </form>
     </div>
 {/include}

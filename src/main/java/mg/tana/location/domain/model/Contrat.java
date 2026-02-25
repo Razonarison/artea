@@ -20,6 +20,7 @@ public class Contrat extends AggregateRoot {
     private BigDecimal salaireBase;
 
     public Contrat() {
+        super.setValide(true);
     }
 
     public Contrat(Long id, ContratType type, LocalDate debutContrat, LocalDate finContrat, BigDecimal salaireBase, boolean valide) {
