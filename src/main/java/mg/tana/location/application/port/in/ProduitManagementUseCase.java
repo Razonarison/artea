@@ -10,4 +10,6 @@ public interface ProduitManagementUseCase {
     Produit createProduit(CreateProduitCommand command);
 
     List<Produit> listProduits();
+
+    Produit getProduit(Long id);
 }

@@ -1,11 +1,7 @@
 package mg.tana.location.infrastructure.in.rest;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import mg.tana.location.application.command.CreateContratCommand;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
@@ -36,5 +32,11 @@ public class ContratResource {
     @GET
     public List<Contrat> listContrats() {
         return contratManagement.listContrats();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Contrat getSpecifiqueContrat(@QueryParam("id") Long id) {
+        return contratManagement.getContrat(id);
     }
 }

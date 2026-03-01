@@ -3,6 +3,7 @@ package mg.tana.location.application.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import mg.tana.location.application.command.*;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
 import mg.tana.location.application.port.in.EventQueryUseCase;
@@ -66,6 +67,16 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
+    public Contrat getContrat(Long id) {
+        Optional<Contrat> contratOptional = contratRepositoryPort.findById(id);
+        if (!contratOptional.isPresent()) {
+            throw new NotFoundException("Contrat " + id + " introuvable ");
+        }
+
+        return contratOptional.get();
+    }
+
+    @Override
     @Transactional
     public Produit createProduit(CreateProduitCommand command) {
         Produit produit = commandUtil.mapProduitCommandToEntity(command);
@@ -89,8 +100,17 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
 
     @Override
     public List<Produit> listProduits() {
-
         return produitRepositoryPort.findAll();
+    }
+
+    @Override
+    public Produit getProduit(Long id) {
+        Optional<Produit> produitOptional = produitRepositoryPort.findById(id);
+        if (!produitOptional.isPresent()) {
+            throw new NotFoundException("Produit " + id + " introuvable");
+        }
+
+        return produitOptional.get();
     }
 
     @Override

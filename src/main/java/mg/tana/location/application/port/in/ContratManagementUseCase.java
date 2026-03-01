@@ -10,4 +10,6 @@ public interface ContratManagementUseCase {
     Contrat createContrat(CreateContratCommand command);
 
     List<Contrat> listContrats();
+
+    Contrat getContrat(Long id);
 }
