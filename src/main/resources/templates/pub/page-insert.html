@@ -1,6 +1,12 @@
 {#include pub/layout/base}
     <div class="flex justify-center">
-        <form hx-post="{pageAppelInsert}" hx-ext="json-enc" hx-trigger="submit">
+        <form
+            hx-post="{pageAppelInsert}"
+            hx-trigger="submit"
+            hx-ext="json-enc"
+            hx-swap="none"
+            hx-on::after-request="this.reset()"
+        >
             <fieldset class="fieldset bg-base-200 border-base-200 rounded-box w-md border p-4" >
                 <legend class="fieldset-legend">{title}</legend>
                 {#for i in data.labels}
@@ -25,6 +31,7 @@
                     Enregistrer
                 </button>
             </fieldset>
+
         </form>
     </div>
 {/include}
