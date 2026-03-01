@@ -23,7 +23,7 @@
                 <tr>
                     {#for row in rows}
                         {#if row_isFirst}
-                            <th><a class="link" href="#">{row}</a></th>
+                            <th><a class="link" href="{pageDetailAppel}/{row}">{row}</a></th>
                         {#else}
                             <th>{row}</th>
                         {/if}
