@@ -12,6 +12,7 @@ import mg.tana.location.application.service.LocationManagementService;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
+import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -30,8 +31,8 @@ public class PageListResource {
     @GET
     @Path("users")
     public TemplateInstance makeListeUsers() throws IllegalAccessException {
-        List<User> users = managementService.listUsers();
-        Map<String, Object> data = PageUtil.makePageList(users, User.class);
+        List<UserListResponse> users = managementService.listUsers();
+        Map<String, Object> data = PageUtil.makePageList(users, UserListResponse.class);
         return listePage.data("title", User.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/user", "pageDetailAppel", "/users");
     }
 

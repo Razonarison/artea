@@ -1,4 +1,4 @@
-package mg.tana.location.infrastructure.in.rest.dto;
+package mg.tana.location.infrastructure.in.rest.dto.request;
 
 import java.time.LocalDate;
 

@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import mg.tana.location.application.command.CreateProduitCommand;
 import mg.tana.location.application.port.in.ProduitManagementUseCase;
 import mg.tana.location.domain.model.Produit;
-import mg.tana.location.infrastructure.in.rest.dto.CreateProduitRequest;
+import mg.tana.location.infrastructure.in.rest.dto.request.CreateProduitRequest;
 
 import java.util.List;
 

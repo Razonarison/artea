@@ -12,8 +12,9 @@ import mg.tana.location.application.command.AssignContratToUserCommand;
 import mg.tana.location.application.command.CreateUserCommand;
 import mg.tana.location.application.port.in.UserManagementUseCase;
 import mg.tana.location.domain.model.User;
-import mg.tana.location.infrastructure.in.rest.dto.AssignContratRequest;
-import mg.tana.location.infrastructure.in.rest.dto.CreateUserRequest;
+import mg.tana.location.infrastructure.in.rest.dto.request.AssignContratRequest;
+import mg.tana.location.infrastructure.in.rest.dto.request.CreateUserRequest;
+import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
 import java.util.List;
 
@@ -39,13 +40,14 @@ public class UserResource {
     }
 
     @GET
-    public List<User> listUsers() {
+    public List<UserListResponse> listUsers() {
         return userManagement.listUsers();
     }
 
     @GET
     @Path("/{userId}")
     public User findUser(@PathParam("userId") Long userId) {
+
         return userManagement.findUser(userId);
     }
 

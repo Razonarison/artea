@@ -1,6 +1,7 @@
 package mg.tana.location.application.port.out;
 
 import mg.tana.location.domain.model.User;
+import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,5 +12,5 @@ public interface UserRepositoryPort {
 
     Optional<User> findById(Long id);
 
-    List<User> findAll();
+    List<UserListResponse> findAll();
 }

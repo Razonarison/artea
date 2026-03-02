@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import mg.tana.location.application.command.CreateContratCommand;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
 import mg.tana.location.domain.model.Contrat;
-import mg.tana.location.infrastructure.in.rest.dto.CreateContratRequest;
+import mg.tana.location.infrastructure.in.rest.dto.request.CreateContratRequest;
 
 import java.util.List;
 

@@ -1,9 +1,6 @@
 package mg.tana.location.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import mg.tana.location.application.service.ChampLibelle;
 
 import java.time.LocalDate;
@@ -14,15 +11,11 @@ import java.util.Arrays;
 public class User extends AggregateRoot {
     private String nom;
     private String prenom;
-
-    @ChampLibelle("Date de naissance")
     private LocalDate dateNaissance;
-
-    @ChampLibelle("Date d'embauche")
     private LocalDate dateEmbauche;
     private String cin;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "contrat_id")
     private Contrat contrat;
 
