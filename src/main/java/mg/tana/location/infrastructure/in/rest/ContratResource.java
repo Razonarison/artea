@@ -7,6 +7,7 @@ import mg.tana.location.application.command.CreateContratCommand;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.infrastructure.in.rest.dto.request.CreateContratRequest;
+import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ContratResource {
     }
 
     @GET
-    public List<Contrat> listContrats() {
+    public List<ContratListResponse> listContrats() {
         return contratManagement.listContrats();
     }
 

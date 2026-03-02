@@ -11,6 +11,7 @@ import mg.tana.location.application.command.CreateProduitCommand;
 import mg.tana.location.application.port.in.ProduitManagementUseCase;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.infrastructure.in.rest.dto.request.CreateProduitRequest;
+import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ProduitResource {
     }
 
     @GET
-    public List<Produit> listProduits() {
+    public List<ProduitListResponse> listProduits() {
         return produitManagement.listProduits();
     }
 }

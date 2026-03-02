@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import mg.tana.location.application.port.out.ContratRepositoryPort;
 import mg.tana.location.domain.model.Contrat;
+import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,9 @@ public class ContratRepositoryAdapter implements ContratRepositoryPort {
     }
 
     @Override
-    public List<Contrat> findAll() {
-        return Contrat.listAll();
+    public List<ContratListResponse> findAll() {
+        return Contrat.find("Select c.id, c.type, c.debutContrat, c.finContrat, c.salaireBase from Contrat c")
+                .project(ContratListResponse.class)
+                .list();
     }
 }

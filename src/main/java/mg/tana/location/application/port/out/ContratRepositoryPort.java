@@ -1,6 +1,7 @@
 package mg.tana.location.application.port.out;
 
 import mg.tana.location.domain.model.Contrat;
+import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,5 +12,5 @@ public interface ContratRepositoryPort {
 
     Optional<Contrat> findById(Long id);
 
-    List<Contrat> findAll();
+    List<ContratListResponse> findAll();
 }

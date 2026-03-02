@@ -1,33 +1,37 @@
-package mg.tana.location.domain.model;
+package mg.tana.location.infrastructure.in.rest.dto.response;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import mg.tana.location.application.service.ChampLibelle;
 import mg.tana.location.application.service.FormatNumber;
 import mg.tana.location.domain.model.type.ContratType;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "contrat")
-public class Contrat extends AggregateRoot {
-    @Enumerated(EnumType.STRING)
+public class ContratListResponse {
+    private Long id;
     private ContratType type;
+    @ChampLibelle("Début validité contrat")
     private LocalDate debutContrat;
+    @ChampLibelle("Fin validité contrat")
     private LocalDate finContrat;
+    @ChampLibelle("Salaire de base")
+    @FormatNumber()
     private BigDecimal salaireBase;
 
-    public Contrat() {
-        super.setValide(true);
-    }
-
-    public Contrat(Long id, ContratType type, LocalDate debutContrat, LocalDate finContrat, BigDecimal salaireBase, boolean valide) {
-        super(id, valide);
+    public ContratListResponse(Long id, ContratType type, LocalDate debutContrat, LocalDate finContrat, BigDecimal salaireBase) {
+        this.id = id;
         this.type = type;
         this.debutContrat = debutContrat;
         this.finContrat = finContrat;
         this.salaireBase = salaireBase;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ContratType getType() {

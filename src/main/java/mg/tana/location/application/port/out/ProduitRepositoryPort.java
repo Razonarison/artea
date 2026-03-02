@@ -1,6 +1,7 @@
 package mg.tana.location.application.port.out;
 
 import mg.tana.location.domain.model.Produit;
+import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,5 +12,5 @@ public interface ProduitRepositoryPort {
 
     Optional<Produit> findById(Long id);
 
-    List<Produit> findAll();
+    List<ProduitListResponse> findAll();
 }

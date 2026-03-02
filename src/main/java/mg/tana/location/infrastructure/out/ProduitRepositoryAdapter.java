@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import mg.tana.location.application.port.out.ProduitRepositoryPort;
 import mg.tana.location.domain.model.Produit;
+import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,10 @@ public class ProduitRepositoryAdapter implements ProduitRepositoryPort {
     }
 
     @Override
-    public List<Produit> findAll() {
-        return Produit.listAll();
+    public List<ProduitListResponse> findAll() {
+
+        return Produit.find("select p.id, p.categorie, p.sousCategorie, p.itemDescription, p.puLocation, p.puCaution from Produit p")
+                .project(ProduitListResponse.class)
+                .list();
     }
 }

@@ -21,6 +21,8 @@ import mg.tana.location.domain.event.type.UserCreatedEvent;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
+import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
+import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
 import java.util.List;
@@ -64,7 +66,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
-    public List<Contrat> listContrats() {
+    public List<ContratListResponse> listContrats() {
         return contratRepositoryPort.findAll();
     }
 
@@ -101,7 +103,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
-    public List<Produit> listProduits() {
+    public List<ProduitListResponse> listProduits() {
         return produitRepositoryPort.findAll();
     }
 

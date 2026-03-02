@@ -12,6 +12,8 @@ import mg.tana.location.application.service.LocationManagementService;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
+import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
+import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
 import java.util.List;
@@ -39,16 +41,16 @@ public class PageListResource {
     @GET
     @Path("contracts")
     public TemplateInstance makeListeContrats() throws IllegalAccessException {
-        List<Contrat> contrats = managementService.listContrats();
-        Map<String, Object> data = PageUtil.makePageList(contrats, Contrat.class);
+        List<ContratListResponse> contrats = managementService.listContrats();
+        Map<String, Object> data = PageUtil.makePageList(contrats, ContratListResponse.class);
         return listePage.data("title", Contrat.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/contract", "pageDetailAppel", "/contracts");
     }
 
     @GET
     @Path("products")
     public TemplateInstance makeListeProduits() throws IllegalAccessException {
-        List<Produit> produits = managementService.listProduits();
-        Map<String, Object> data = PageUtil.makePageList(produits, Produit.class);
+        List<ProduitListResponse> produits = managementService.listProduits();
+        Map<String, Object> data = PageUtil.makePageList(produits, ProduitListResponse.class);
         return listePage.data("title", Produit.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/product", "pageDetailAppel", "/products");
     }
 

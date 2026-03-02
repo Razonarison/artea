@@ -1,41 +1,40 @@
-package mg.tana.location.domain.model;
+package mg.tana.location.infrastructure.in.rest.dto.response;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
 import mg.tana.location.application.service.ChampLibelle;
 import mg.tana.location.application.service.FormatNumber;
 import mg.tana.location.domain.model.type.ProduitSousCategorie;
+
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "produit")
-public class Produit extends AggregateRoot {
+public class ProduitListResponse {
+    private Long id;
     private String categorie;
-
-    @Enumerated(EnumType.STRING)
+    @ChampLibelle("Sous catégorie")
     private ProduitSousCategorie sousCategorie;
+    @ChampLibelle("Description")
     private String itemDescription;
-    private BigDecimal puAchat;
+    @ChampLibelle("PU location")
+    @FormatNumber
     private BigDecimal puLocation;
+    @ChampLibelle("PU caution")
+    @FormatNumber
     private BigDecimal puCaution;
-    private String lienAchat;
 
-    public Produit() {
-        super.setValide(true);
-    }
-
-    public Produit(Long id, String categorie, ProduitSousCategorie sousCategorie, String itemDescription, BigDecimal puAchat,
-                   BigDecimal puLocation, BigDecimal puCaution, String lienAchat) {
-        super(id);
+    public ProduitListResponse(Long id, String categorie, ProduitSousCategorie sousCategorie, String itemDescription, BigDecimal puLocation, BigDecimal puCaution) {
+        this.id = id;
         this.categorie = categorie;
         this.sousCategorie = sousCategorie;
         this.itemDescription = itemDescription;
-        this.puAchat = puAchat;
         this.puLocation = puLocation;
         this.puCaution = puCaution;
-        this.lienAchat = lienAchat;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCategorie() {
@@ -62,14 +61,6 @@ public class Produit extends AggregateRoot {
         this.itemDescription = itemDescription;
     }
 
-    public BigDecimal getPuAchat() {
-        return puAchat;
-    }
-
-    public void setPuAchat(BigDecimal puAchat) {
-        this.puAchat = puAchat;
-    }
-
     public BigDecimal getPuLocation() {
         return puLocation;
     }
@@ -84,13 +75,5 @@ public class Produit extends AggregateRoot {
 
     public void setPuCaution(BigDecimal puCaution) {
         this.puCaution = puCaution;
-    }
-
-    public String getLienAchat() {
-        return lienAchat;
-    }
-
-    public void setLienAchat(String lienAchat) {
-        this.lienAchat = lienAchat;
     }
 }
