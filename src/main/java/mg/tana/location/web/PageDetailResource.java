@@ -13,6 +13,9 @@ import mg.tana.location.application.service.LocationManagementService;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
+import mg.tana.location.infrastructure.in.rest.dto.response.UserDetailResponse;
+
+import java.util.Map;
 
 @Path("/")
 @Produces(MediaType.TEXT_HTML)
@@ -27,9 +30,10 @@ public class PageDetailResource {
 
     @GET
     @Path("/users/{id}")
-    public TemplateInstance showDetailUser(@PathParam("id") Long id) {
+    public TemplateInstance showDetailUser(@PathParam("id") Long id) throws IllegalAccessException {
         User user = locationManagementService.findUser(id);
-        return pageDetail.data("id", id, "data", user);
+        Map<String, Object> data = PageUtil.makePageDetail(user);
+        return pageDetail.data("id", id, "data", data);
     }
 
     @GET

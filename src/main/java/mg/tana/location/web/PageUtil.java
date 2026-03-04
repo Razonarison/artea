@@ -111,6 +111,27 @@ public final class PageUtil {
 
     }
 
+    /**
+     * id, 1
+     * nom, wawa
+     * prenom, wawa
+     */
+    public static Map<String, Object> makePageDetail(Object e) throws IllegalAccessException {
+        Class<?> clazz = e.getClass();
+        List<ChampMeta> metas = (List<ChampMeta>) getChampsMeta(clazz, FOR_LIST);
+        List<String> headers = metas.stream()
+                .map(ChampMeta::fieldLabel)
+                .toList();
+
+        List<Object> rows = getValues(e, metas);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("headers", headers);
+        model.put("rows", rows);
+
+        return model;
+    }
+
     public static Map<String, Object> magePageInsert(Class<?> type) {
         List<ChampMeta> metas = (List<ChampMeta>) getChampsMeta(type, FOR_INSERT);
         List<String> fieldNames = metas.stream()

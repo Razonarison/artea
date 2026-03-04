@@ -23,6 +23,7 @@ import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
 import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
+import mg.tana.location.infrastructure.in.rest.dto.response.UserDetailResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
 import java.util.List;
@@ -140,7 +141,7 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
-    public User findUser(Long userId) {
+    public User findUserDetails(Long userId) {
         Optional<User> user = userRepositoryPort.findById(userId);
         if (user.isPresent()) {
             return user.get();

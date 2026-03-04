@@ -40,10 +40,11 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<User> findUserDetailsById(Long id) {
+
         return Optional.ofNullable(User.findById(id));
     }
-    
+
     public List<UserListResponse> findAll() {
         return User.find("Select u.id, u.nom, u.prenom, u.cin, u.dateEmbauche from User u")
                 .project(UserListResponse.class)
