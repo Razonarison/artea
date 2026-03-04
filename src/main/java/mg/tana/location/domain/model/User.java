@@ -11,7 +11,9 @@ import java.util.Arrays;
 public class User extends AggregateRoot {
     private String nom;
     private String prenom;
+    @ChampLibelle("Date de naissance")
     private LocalDate dateNaissance;
+    @ChampLibelle("Date d'embauche")
     private LocalDate dateEmbauche;
     private String cin;
 

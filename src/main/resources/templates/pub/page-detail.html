@@ -1,4 +1,23 @@
 {#include pub/layout/base}
-    <h1>Hello Mahefa {id}</h1>
-    <p>{data}</p>
+    <div class="flex justify-center">
+        <fieldset class="fieldset bg-base-200 border-base-200 rounded-box w-md border p-4" >
+            <legend class="fieldset-legend">{id}</legend>
+            <table class="table">
+                <tbody>
+                    {#for header in data.headers}
+                        <tr>
+                            <th>{header}</th>
+                            <td>{data.rows.get(header_index)}</td>
+                        </tr>
+                    {/for}
+
+                </tbody>
+            </table>
+
+            <div>
+                <button class="btn btn-warning">Modifier</button>
+                <button class="btn btn-error">Supprimer</button>
+            </div>
+        </fieldset>
+    </div>
 {/include}

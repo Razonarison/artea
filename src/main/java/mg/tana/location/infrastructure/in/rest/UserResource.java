@@ -48,7 +48,8 @@ public class UserResource {
     @Path("/{userId}")
     public User findUser(@PathParam("userId") Long userId) {
 
-        return userManagement.findUser(userId);
+        //return userManagement.findUser(userId);
+        return userManagement.findUserDetails(userId);
     }
 
     @POST

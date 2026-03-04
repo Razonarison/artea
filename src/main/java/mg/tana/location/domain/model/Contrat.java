@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import mg.tana.location.application.service.ChampLibelle;
 import mg.tana.location.application.service.FormatNumber;
 import mg.tana.location.domain.model.type.ContratType;
 import java.math.BigDecimal;
@@ -14,8 +15,11 @@ import java.time.LocalDate;
 public class Contrat extends AggregateRoot {
     @Enumerated(EnumType.STRING)
     private ContratType type;
+    @ChampLibelle("Début contrat")
     private LocalDate debutContrat;
+    @ChampLibelle("Fin contrat")
     private LocalDate finContrat;
+    @ChampLibelle("Salaire base")
     private BigDecimal salaireBase;
 
     public Contrat() {

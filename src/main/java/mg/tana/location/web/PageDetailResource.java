@@ -31,23 +31,25 @@ public class PageDetailResource {
     @GET
     @Path("/users/{id}")
     public TemplateInstance showDetailUser(@PathParam("id") Long id) throws IllegalAccessException {
-        User user = locationManagementService.findUser(id);
+        User user = locationManagementService.findUserDetails(id);
         Map<String, Object> data = PageUtil.makePageDetail(user);
         return pageDetail.data("id", id, "data", data);
     }
 
     @GET
     @Path("/products/{id}")
-    public TemplateInstance showDetailProduct(@PathParam("id") Long id) {
+    public TemplateInstance showDetailProduct(@PathParam("id") Long id) throws IllegalAccessException {
         Produit produit = locationManagementService.getProduit(id);
-        return pageDetail.data("id", id, "data", produit);
+        Map<String, Object> data = PageUtil.makePageDetail(produit);
+        return pageDetail.data("id", id, "data", data);
     }
 
     @GET
     @Path("/contracts/{id}")
-    public TemplateInstance showDetailContract(@PathParam("id") Long id) {
+    public TemplateInstance showDetailContract(@PathParam("id") Long id) throws IllegalAccessException {
         Contrat contrat = locationManagementService.getContrat(id);
-        return pageDetail.data("id", id, "data", contrat);
+        Map<String, Object> data = PageUtil.makePageDetail(contrat);
+        return pageDetail.data("id", id, "data", data);
     }
 
 }

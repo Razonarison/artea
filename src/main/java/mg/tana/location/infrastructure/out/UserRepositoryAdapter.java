@@ -40,7 +40,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
-    public Optional<User> findUserDetailsById(Long id) {
+    public Optional<User> findById(Long id) {
 
         return Optional.ofNullable(User.findById(id));
     }

@@ -15,11 +15,20 @@ public class Produit extends AggregateRoot {
     private String categorie;
 
     @Enumerated(EnumType.STRING)
+    @ChampLibelle("Sous catégorie")
     private ProduitSousCategorie sousCategorie;
+    @ChampLibelle("Description")
     private String itemDescription;
+    @FormatNumber
+    @ChampLibelle("PU achat")
     private BigDecimal puAchat;
+    @FormatNumber
+    @ChampLibelle("PU location")
     private BigDecimal puLocation;
+    @FormatNumber
+    @ChampLibelle("PU caution")
     private BigDecimal puCaution;
+    @ChampLibelle("Lien fournisseur")
     private String lienAchat;
 
     public Produit() {
