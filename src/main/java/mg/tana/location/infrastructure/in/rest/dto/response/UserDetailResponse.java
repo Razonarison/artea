@@ -1,6 +1,10 @@
 package mg.tana.location.infrastructure.in.rest.dto.response;
 
 import mg.tana.location.application.service.ChampLibelle;
+import mg.tana.location.domain.model.type.ContratType;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class UserDetailResponse {
     private Long id;
@@ -8,20 +12,12 @@ public class UserDetailResponse {
     private String prenom;
     private String cin;
     @ChampLibelle("Date d' embauche")
-    private String dateEmbauche;
+    private LocalDate dateEmbauche;
     @ChampLibelle("Date de naissance")
-    private String dateNaissance;
-    private ContratListResponse contratListResponse;
+    private LocalDate dateNaissance;
+    private ContratType typeContrat;
+    private BigDecimal salaireBase;
 
-    public UserDetailResponse(Long id, String nom, String prenom, String cin, String dateEmbauche, String dateNaissance, ContratListResponse contratListResponse) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.cin = cin;
-        this.dateEmbauche = dateEmbauche;
-        this.dateNaissance = dateNaissance;
-        this.contratListResponse = contratListResponse;
-    }
 
     public Long getId() {
         return id;
@@ -55,27 +51,46 @@ public class UserDetailResponse {
         this.cin = cin;
     }
 
-    public String getDateEmbauche() {
+    public LocalDate getDateEmbauche() {
         return dateEmbauche;
     }
 
-    public void setDateEmbauche(String dateEmbauche) {
+    public void setDateEmbauche(LocalDate dateEmbauche) {
         this.dateEmbauche = dateEmbauche;
     }
 
-    public String getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(String dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
-    public ContratListResponse getContratListResponse() {
-        return contratListResponse;
+    public ContratType getTypeContrat() {
+        return typeContrat;
     }
 
-    public void setContratListResponse(ContratListResponse contratListResponse) {
-        this.contratListResponse = contratListResponse;
+    public void setTypeContrat(ContratType typeContrat) {
+        this.typeContrat = typeContrat;
+    }
+
+    public BigDecimal getSalaireBase() {
+        return salaireBase;
+    }
+
+    public void setSalaireBase(BigDecimal salaireBase) {
+        this.salaireBase = salaireBase;
+    }
+
+    public UserDetailResponse(Long id, String nom, String prenom, String cin, LocalDate dateEmbauche, LocalDate dateNaissance, ContratType typeContrat, BigDecimal salaireBase) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.cin = cin;
+        this.dateEmbauche = dateEmbauche;
+        this.dateNaissance = dateNaissance;
+        this.typeContrat = typeContrat;
+        this.salaireBase = salaireBase;
     }
 }

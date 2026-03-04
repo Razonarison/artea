@@ -141,13 +141,8 @@ public class LocationManagementService implements UserManagementUseCase, Contrat
     }
 
     @Override
-    public User findUserDetails(Long userId) {
-        Optional<User> user = userRepositoryPort.findById(userId);
-        if (user.isPresent()) {
-            return user.get();
-        }
-
-        return null;
+    public UserDetailResponse findUserDetails(Long userId) {
+        return userRepositoryPort.findUserDetails(userId);
     }
 
     @Override

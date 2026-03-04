@@ -1388,6 +1388,12 @@
       --size: calc(var(--size-field, 0.25rem) * 8);
     }
   }
+  .btn-error {
+    @layer daisyui.l1.l2.l3 {
+      --btn-color: var(--color-error);
+      --btn-fg: var(--color-error-content);
+    }
+  }
   .btn-neutral {
     @layer daisyui.l1.l2.l3 {
       --btn-color: var(--color-neutral);
@@ -1398,6 +1404,12 @@
     @layer daisyui.l1.l2.l3 {
       --btn-color: var(--color-success);
       --btn-fg: var(--color-success-content);
+    }
+  }
+  .btn-warning {
+    @layer daisyui.l1.l2.l3 {
+      --btn-color: var(--color-warning);
+      --btn-fg: var(--color-warning-content);
     }
   }
   .lg\:drawer-open {

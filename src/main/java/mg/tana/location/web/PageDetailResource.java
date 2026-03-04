@@ -31,7 +31,7 @@ public class PageDetailResource {
     @GET
     @Path("/users/{id}")
     public TemplateInstance showDetailUser(@PathParam("id") Long id) throws IllegalAccessException {
-        User user = locationManagementService.findUserDetails(id);
+        UserDetailResponse user = locationManagementService.findUserDetails(id);
         Map<String, Object> data = PageUtil.makePageDetail(user);
         return pageDetail.data("id", id, "data", data);
     }
