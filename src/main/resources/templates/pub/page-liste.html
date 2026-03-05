@@ -1,5 +1,16 @@
 {#include pub/layout/base}
-    <div class="flex justify-between px-4">
+    <div class="w-full bg-base-200 border-base-300 rounded-box border p-4">
+        <legend class="fieldset-legend">Champs recherche</legend>
+        <fieldset class="flex flex-wrap fieldset mb-4">
+            {#for champ in champsRecherche}
+            <input type="{champ.fieldType}" class="input" placeholder="{champ.fieldLabel}" />
+            {/for}
+        </fieldset>
+
+        <button class="btn btn-sm btn-success">Rechercher</button>
+    </div>
+
+    <div class="flex justify-between px-4 mt-6">
         <h1>Liste {title}</h1>
         <button class="btn btn-sm btn-neutral" hx-get="{pageInsertAppel}" hx-target="#main-content" hx-swap="innerHTML" hx-select="#main-content > *">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

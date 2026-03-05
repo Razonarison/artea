@@ -1,6 +1,7 @@
 package mg.tana.location.infrastructure.in.rest.dto.response;
 
 import mg.tana.location.application.service.ChampLibelle;
+import mg.tana.location.application.service.FormatNumber;
 import mg.tana.location.domain.model.type.ContratType;
 
 import java.math.BigDecimal;
@@ -16,6 +17,8 @@ public class UserDetailResponse {
     @ChampLibelle("Date de naissance")
     private LocalDate dateNaissance;
     private ContratType typeContrat;
+    @FormatNumber
+    @ChampLibelle("Salaire de base")
     private BigDecimal salaireBase;
 
 

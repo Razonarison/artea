@@ -31,28 +31,7 @@ public final class PageUtil {
                 if (FOR_INSERT.equals(usedFor) && f.isAnnotationPresent(HideChampInsert.class)) continue;
                 if (FOR_INSERT.equals(usedFor) && f.getName().equals("id")) continue;
 
-                String label = f.isAnnotationPresent(ChampLibelle.class)
-                        ? f.getAnnotation(ChampLibelle.class).value()
-                        : f.getName();
-
-                String fieldType = f.getType().getSimpleName();
-                switch (fieldType) {
-                    case "String":
-                        champMetaFieldType = "text";
-                        break;
-                    case "LocalDate":
-                        champMetaFieldType = "date";
-                        break;
-                    case "BigDecimal":
-                        champMetaFieldType = "number";
-                        break;
-                    default:
-                        champMetaFieldType = (f.getType().isEnum() || f.isAnnotationPresent(ManyToOne.class))
-                                ? "select"
-                                : "text";
-                }
-
-                metas.add(new ChampMeta(f.getName(), label, champMetaFieldType));
+                buildChampMetas(metas, f);
             }
         }
 
@@ -108,7 +87,6 @@ public final class PageUtil {
         model.put("rows", rows);
 
         return model;
-
     }
 
     /**
@@ -172,4 +150,43 @@ public final class PageUtil {
         return model;
     }
 
+
+    public static List<ChampMeta> makeChampsRecherche(Class<?> clazz) {
+        List<ChampMeta> champMetas = new ArrayList<>();
+
+        for (Field f : clazz.getDeclaredFields()) {
+            String champMetaFieldType;
+            if (f.isSynthetic() || f.getName().startsWith("$$")) continue;
+
+            buildChampMetas(champMetas, f);
+        }
+
+        return champMetas;
+    }
+
+    private static void buildChampMetas(List<ChampMeta> champMetas, Field f) {
+        String champMetaFieldType;
+        String label = f.isAnnotationPresent(ChampLibelle.class)
+                ? f.getAnnotation(ChampLibelle.class).value()
+                : f.getName();
+
+        String fieldType = f.getType().getSimpleName();
+        switch (fieldType) {
+            case "String":
+                champMetaFieldType = "text";
+                break;
+            case "LocalDate":
+                champMetaFieldType = "date";
+                break;
+            case "BigDecimal":
+                champMetaFieldType = "number";
+                break;
+            default:
+                champMetaFieldType = (f.getType().isEnum() || f.isAnnotationPresent(ManyToOne.class))
+                        ? "select"
+                        : "text";
+        }
+
+        champMetas.add(new ChampMeta(f.getName(), label, champMetaFieldType));
+    }
 }
