@@ -51,7 +51,13 @@ public class PageListResource {
         List<ContratListResponse> contrats = managementService.listContrats();
         Map<String, Object> data = PageUtil.makePageList(contrats, ContratListResponse.class);
         List<ChampMeta> champsRecherche = PageUtil.makeChampsRecherche(ContratListResponse.class);
-        return listePage.data("title", Contrat.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/contract", "pageDetailAppel", "/contracts", "champsRecherche", champsRecherche);
+        return listePage.data(
+                "title", Contrat.class.getSimpleName(),
+                "data", data,
+                "pageInsertAppel", "/add/contract",
+                "pageDetailAppel", "/contracts",
+                "champsRecherche", champsRecherche
+        );
     }
 
     @GET
@@ -60,7 +66,13 @@ public class PageListResource {
         List<ProduitListResponse> produits = managementService.listProduits();
         Map<String, Object> data = PageUtil.makePageList(produits, ProduitListResponse.class);
         List<ChampMeta> champsRecherche = PageUtil.makeChampsRecherche(ProduitListResponse.class);
-        return listePage.data("title", Produit.class.getSimpleName(), "data", data, "pageInsertAppel", "/add/product", "pageDetailAppel", "/products", "champsRecherche", champsRecherche);
+        return listePage.data(
+                "title", Produit.class.getSimpleName(),
+                "data", data,
+                "pageInsertAppel", "/add/product",
+                "pageDetailAppel", "/products",
+                "champsRecherche", champsRecherche
+        );
     }
 
 }

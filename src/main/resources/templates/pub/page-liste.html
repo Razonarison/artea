@@ -3,7 +3,12 @@
         <legend class="fieldset-legend">Champs recherche</legend>
         <fieldset class="flex flex-wrap fieldset mb-4">
             {#for champ in champsRecherche}
-            <input type="{champ.fieldType}" class="input" placeholder="{champ.fieldLabel}" />
+                {#if champ.fieldType eq 'number'}
+                    <input type="{champ.fieldType}"  name="{champ.fieldName}-min" class="input" placeholder="{champ.fieldLabel} min" />
+                    <input type="{champ.fieldType}" class="input" placeholder="{champ.fieldLabel} max" />
+                    {#else}
+                    <input type="{champ.fieldType}" name="{champ.fieldName}-max" class="input" placeholder="{champ.fieldLabel}" />
+                {/if}
             {/for}
         </fieldset>
 
