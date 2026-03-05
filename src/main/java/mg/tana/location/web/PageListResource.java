@@ -16,6 +16,7 @@ import mg.tana.location.infrastructure.in.rest.dto.response.ContratListResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.ProduitListResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,11 +37,14 @@ public class PageListResource {
         List<UserListResponse> users = managementService.listUsers();
         Map<String, Object> data = PageUtil.makePageList(users, UserListResponse.class);
         List<ChampMeta> champsRecherche = PageUtil.makeChampsRecherche(UserListResponse.class);
+        Map<String, String> pageLink = new HashMap<>();
+        pageLink.put("pageInsertAppel", "/add/user");
+        pageLink.put("pageDetailAppel", "/users");
+        pageLink.put("pageRechercheAppel", "/list/users");
         return listePage.data(
                 "title", User.class.getSimpleName(),
                 "data", data,
-                "pageInsertAppel", "/add/user",
-                "pageDetailAppel", "/users",
+                "links", pageLink,
                 "champsRecherche", champsRecherche
         );
     }
@@ -51,11 +55,14 @@ public class PageListResource {
         List<ContratListResponse> contrats = managementService.listContrats();
         Map<String, Object> data = PageUtil.makePageList(contrats, ContratListResponse.class);
         List<ChampMeta> champsRecherche = PageUtil.makeChampsRecherche(ContratListResponse.class);
+        Map<String, String> pageLink = new HashMap<>();
+        pageLink.put("pageInsertAppel", "/add/contract");
+        pageLink.put("pageDetailAppel", "/contracts");
+        pageLink.put("pageRechercheAppel", "/list/contracts");
         return listePage.data(
                 "title", Contrat.class.getSimpleName(),
                 "data", data,
-                "pageInsertAppel", "/add/contract",
-                "pageDetailAppel", "/contracts",
+                "links", pageLink,
                 "champsRecherche", champsRecherche
         );
     }
@@ -66,11 +73,14 @@ public class PageListResource {
         List<ProduitListResponse> produits = managementService.listProduits();
         Map<String, Object> data = PageUtil.makePageList(produits, ProduitListResponse.class);
         List<ChampMeta> champsRecherche = PageUtil.makeChampsRecherche(ProduitListResponse.class);
+        Map<String, String> pageLink = new HashMap<>();
+        pageLink.put("pageInsertAppel", "/add/product");
+        pageLink.put("pageDetailAppel", "/products");
+        pageLink.put("pageRechercheAppel", "/list/products");
         return listePage.data(
                 "title", Produit.class.getSimpleName(),
                 "data", data,
-                "pageInsertAppel", "/add/product",
-                "pageDetailAppel", "/products",
+                "links", pageLink,
                 "champsRecherche", champsRecherche
         );
     }

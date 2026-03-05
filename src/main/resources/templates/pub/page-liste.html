@@ -5,9 +5,9 @@
             {#for champ in champsRecherche}
                 {#if champ.fieldType eq 'number'}
                     <input type="{champ.fieldType}"  name="{champ.fieldName}-min" class="input" placeholder="{champ.fieldLabel} min" />
-                    <input type="{champ.fieldType}" class="input" placeholder="{champ.fieldLabel} max" />
+                    <input type="{champ.fieldType}" name="{champ.fieldName}-max" class="input" placeholder="{champ.fieldLabel} max" />
                     {#else}
-                    <input type="{champ.fieldType}" name="{champ.fieldName}-max" class="input" placeholder="{champ.fieldLabel}" />
+                    <input type="{champ.fieldType}" name="{champ.fieldName}" class="input" placeholder="{champ.fieldLabel}" />
                 {/if}
             {/for}
         </fieldset>
@@ -17,7 +17,7 @@
 
     <div class="flex justify-between px-4 mt-6">
         <h1>Liste {title}</h1>
-        <button class="btn btn-sm btn-neutral" hx-get="{pageInsertAppel}" hx-target="#main-content" hx-swap="innerHTML" hx-select="#main-content > *">
+        <button class="btn btn-sm btn-neutral" hx-get="{links.pageInsertAppel}" hx-target="#main-content" hx-swap="innerHTML" hx-select="#main-content > *">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
@@ -39,7 +39,7 @@
                 <tr>
                     {#for row in rows}
                         {#if row_isFirst}
-                            <th><a class="link" hx-get="{pageDetailAppel}/{row}" hx-target="#main-content" hx-swap="innerHTML" hx-select="#main-content > *">{row}</a></th>
+                            <th><a class="link" hx-get="{links.pageDetailAppel}/{row}" hx-target="#main-content" hx-swap="innerHTML" hx-select="#main-content > *">{row}</a></th>
                         {#else}
                             <th>{row}</th>
                         {/if}
