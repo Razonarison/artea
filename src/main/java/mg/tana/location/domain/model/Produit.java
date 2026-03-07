@@ -30,13 +30,14 @@ public class Produit extends AggregateRoot {
     private BigDecimal puCaution;
     @ChampLibelle("Lien fournisseur")
     private String lienAchat;
+    private int quantity;
 
     public Produit() {
         super.setValide(true);
     }
 
     public Produit(Long id, String categorie, ProduitSousCategorie sousCategorie, String itemDescription, BigDecimal puAchat,
-                   BigDecimal puLocation, BigDecimal puCaution, String lienAchat) {
+                   BigDecimal puLocation, BigDecimal puCaution, String lienAchat, int quantity) {
         super(id);
         this.categorie = categorie;
         this.sousCategorie = sousCategorie;
@@ -45,6 +46,7 @@ public class Produit extends AggregateRoot {
         this.puLocation = puLocation;
         this.puCaution = puCaution;
         this.lienAchat = lienAchat;
+        this.quantity = quantity;
     }
 
     public String getCategorie() {
@@ -101,5 +103,13 @@ public class Produit extends AggregateRoot {
 
     public void setLienAchat(String lienAchat) {
         this.lienAchat = lienAchat;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
