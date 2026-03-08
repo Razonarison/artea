@@ -1,16 +1,14 @@
 package mg.tana.location.infrastructure.out;
 
-import io.quarkus.logging.Log;
+import java.util.List;
+import java.util.Optional;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import mg.tana.location.application.port.out.UserRepositoryPort;
 import mg.tana.location.domain.model.User;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserDetailResponse;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserListResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class UserRepositoryAdapter implements UserRepositoryPort {
@@ -47,7 +45,8 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Override
     public UserDetailResponse findUserDetails(Long id) {
-        return User.find("select u.id, u.nom, u.prenom, u.cin, u.dateEmbauche, u.dateNaissance, u.contrat.type, u.contrat.salaireBase from User u join u.contrat")
+        return User.find(
+                "select u.id, u.nom, u.prenom, u.cin, u.dateEmbauche, u.dateNaissance, u.contrat.type, u.contrat.salaireBase from User u join u.contrat")
                 .project(UserDetailResponse.class)
                 .firstResult();
 

@@ -1,5 +1,7 @@
 package mg.tana.location.web;
 
+import java.util.Map;
+
 import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
@@ -12,10 +14,7 @@ import jakarta.ws.rs.core.MediaType;
 import mg.tana.location.application.service.LocationManagementService;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
-import mg.tana.location.domain.model.User;
 import mg.tana.location.infrastructure.in.rest.dto.response.UserDetailResponse;
-
-import java.util.Map;
 
 @Path("/")
 @Produces(MediaType.TEXT_HTML)

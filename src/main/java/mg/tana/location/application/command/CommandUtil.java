@@ -1,6 +1,7 @@
 package mg.tana.location.application.command;
 
-import io.quarkus.logging.Log;
+import java.util.Optional;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
@@ -10,8 +11,6 @@ import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
 import mg.tana.location.domain.model.type.ProduitSousCategorie;
-
-import java.util.Optional;
 
 @ApplicationScoped
 public class CommandUtil {
@@ -26,7 +25,8 @@ public class CommandUtil {
         Contrat contrat = null;
         if (userCommand.contratId() != null) {
             Optional<Contrat> contratOptional = contratRepositoryPort.findById(userCommand.contratId());
-            contrat = contratOptional.orElseThrow(() -> new IllegalArgumentException("Contrat introuvable: " + userCommand.contratId()));
+            contrat = contratOptional
+                    .orElseThrow(() -> new IllegalArgumentException("Contrat introuvable: " + userCommand.contratId()));
         }
 
         return new User(
@@ -37,8 +37,7 @@ public class CommandUtil {
                 userCommand.dateEmbauche(),
                 userCommand.cin(),
                 contrat,
-                userCommand.valide()
-        );
+                userCommand.valide());
     }
 
     public Contrat mapContratCommandToEntity(CreateContratCommand contratCommand) {

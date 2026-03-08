@@ -1,15 +1,15 @@
 package mg.tana.location.infrastructure.out;
 
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.logging.Log;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import mg.tana.location.application.port.out.EventStorePort;
 import mg.tana.location.domain.event.EventEntity;
-
-import java.util.List;
 
 @ApplicationScoped
 public class EventStoreAdapter implements EventStorePort {

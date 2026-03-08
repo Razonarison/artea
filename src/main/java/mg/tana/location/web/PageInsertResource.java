@@ -1,33 +1,23 @@
 package mg.tana.location.web;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import mg.tana.location.application.command.CreateContratCommand;
-import mg.tana.location.application.command.CreateProduitCommand;
-import mg.tana.location.application.command.CreateUserCommand;
 import mg.tana.location.application.port.in.ContratManagementUseCase;
 import mg.tana.location.application.port.in.ProduitManagementUseCase;
 import mg.tana.location.application.port.in.UserManagementUseCase;
 import mg.tana.location.domain.model.Contrat;
 import mg.tana.location.domain.model.Produit;
 import mg.tana.location.domain.model.User;
-import mg.tana.location.domain.model.type.ContratType;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Path("add")
 @Produces(MediaType.TEXT_HTML)
